@@ -20,7 +20,7 @@ module "waf" {
   source                 = "../terraform-aws-wafv2"
 
   name                   = "albwaf"
-  scope                  =  "REGIONAL"
+  scope                  = "REGIONAL"
   enable_common_rule_set = true
 }
 
