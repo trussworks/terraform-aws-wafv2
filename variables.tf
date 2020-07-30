@@ -9,7 +9,10 @@ variable "scope" {
 }
 
 variable "managed_rules" {
-  type        = list(map(string))
+  type = list(object({
+    name           = string
+    excluded_rules = list(string)
+  }))
   description = "List of WAF rules."
   default = [
     {
@@ -37,4 +40,16 @@ variable "managed_rules" {
       excluded_rules = []
     }
   ]
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "A mapping of tags to assign to the bucket."
+  default     = {}
+}
+
+variable "alb_arn" {
+  type        = string
+  description = "ARN of the Application Load Balancer (ALB) to be associated with the Web Application Firewall (WAF) Access Control List (ACL)."
+  default     = ""
 }

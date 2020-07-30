@@ -9,13 +9,13 @@ resource "aws_wafv2_web_acl" "main" {
   visibility_config {
     cloudwatch_metrics_enabled = true
     sampled_requests_enabled   = true
-    metric_name                = "${var.web_acl_name}-metric"
+    metric_name                = "${var.name}-metric"
   }
 
   dynamic "rule" {
     for_each = var.managed_rules
     content {
-      name     = rule.name
+      name     = rule.value.name
       priority = rule.key # this will be the element index
 
       override_action {
@@ -24,11 +24,11 @@ resource "aws_wafv2_web_acl" "main" {
 
       statement {
         managed_rule_group_statement {
-          name        = rule.name
+          name        = rule.value.name
           vendor_name = "AWS"
 
           dynamic "excluded_rule" {
-            for_each = rule.excluded_rules
+            for_each = rule.value.excluded_rules
             content {
               name = excluded_rule.value
             }
@@ -38,13 +38,14 @@ resource "aws_wafv2_web_acl" "main" {
 
       visibility_config {
         cloudwatch_metrics_enabled = true
-        metric_name                = "${rule.name}-metric"
+        metric_name                = "${rule.value.name}-metric"
         sampled_requests_enabled   = true
       }
 
-      tags = var.tags
     }
   }
+
+  tags = var.tags
 
 }
 
