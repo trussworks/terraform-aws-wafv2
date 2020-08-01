@@ -10,34 +10,48 @@ variable "scope" {
 
 variable "managed_rules" {
   type = list(object({
-    name           = string
-    excluded_rules = list(string)
+    name            = string
+    priority        = number
+    override_action = string
+    excluded_rules  = list(string)
   }))
-  description = "List of WAF rules."
+  description = "List of Managed WAF rules."
   default = [
     {
-      name           = "AWSManagedRulesCommonRuleSet",
-      excluded_rules = []
+      name            = "AWSManagedRulesCommonRuleSet",
+      priority        = 10
+      override_action = "none"
+      excluded_rules  = []
     },
     {
-      name           = "AWSManagedRulesAmazonIpReputationList",
-      excluded_rules = []
+      name            = "AWSManagedRulesAmazonIpReputationList",
+      priority        = 20
+      override_action = "none"
+      excluded_rules  = []
     },
     {
-      name           = "AWSManagedRulesKnownBadInputsRuleSet",
-      excluded_rules = []
+      name            = "AWSManagedRulesKnownBadInputsRuleSet",
+      priority        = 30
+      override_action = "none"
+      excluded_rules  = []
     },
     {
-      name           = "AWSManagedRulesSQLiRuleSet",
-      excluded_rules = []
+      name            = "AWSManagedRulesSQLiRuleSet",
+      priority        = 40
+      override_action = "none"
+      excluded_rules  = []
     },
     {
-      name           = "AWSManagedRulesLinuxRuleSet",
-      excluded_rules = []
+      name            = "AWSManagedRulesLinuxRuleSet",
+      priority        = 50
+      override_action = "none"
+      excluded_rules  = []
     },
     {
-      name           = "AWSManagedRulesUnixRuleSet",
-      excluded_rules = []
+      name            = "AWSManagedRulesUnixRuleSet",
+      priority        = 60
+      override_action = "none"
+      excluded_rules  = []
     }
   ]
 }
@@ -46,6 +60,12 @@ variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the bucket."
   default     = {}
+}
+
+variable "associate_alb" {
+  type        = bool
+  description = "Whether to associate an Application Load Balancer (ALB) with an Web Application Firewall (WAF) Access Control List (ACL)."
+  default     = false
 }
 
 variable "alb_arn" {

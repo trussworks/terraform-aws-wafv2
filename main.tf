@@ -16,10 +16,18 @@ resource "aws_wafv2_web_acl" "main" {
     for_each = var.managed_rules
     content {
       name     = rule.value.name
-      priority = rule.key # this will be the element index
+      priority = rule.value.priority
 
       override_action {
-        none {}
+        dynamic "none" {
+          for_each = rule.value.override_action == "none" ? [1] : []
+          content {}
+        }
+
+        dynamic "count" {
+          for_each = rule.value.override_action == "count" ? [1] : []
+          content {}
+        }
       }
 
       statement {
@@ -41,7 +49,6 @@ resource "aws_wafv2_web_acl" "main" {
         metric_name                = "${rule.value.name}-metric"
         sampled_requests_enabled   = true
       }
-
     }
   }
 
@@ -50,7 +57,7 @@ resource "aws_wafv2_web_acl" "main" {
 }
 
 resource "aws_wafv2_web_acl_association" "main" {
-  count = var.scope == "REGIONAL" && var.alb_arn != "" ? 1 : 0
+  count = var.associate_alb ? 1 : 0
 
   resource_arn = var.alb_arn
   web_acl_arn  = aws_wafv2_web_acl.main.arn
