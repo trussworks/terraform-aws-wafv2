@@ -9,7 +9,7 @@ resource "aws_wafv2_web_acl" "main" {
   visibility_config {
     cloudwatch_metrics_enabled = true
     sampled_requests_enabled   = true
-    metric_name                = "${var.name}-metric"
+    metric_name                = var.name
   }
 
   dynamic "rule" {
@@ -46,7 +46,7 @@ resource "aws_wafv2_web_acl" "main" {
 
       visibility_config {
         cloudwatch_metrics_enabled = true
-        metric_name                = "${rule.value.name}-metric"
+        metric_name                = rule.value.name
         sampled_requests_enabled   = true
       }
     }
