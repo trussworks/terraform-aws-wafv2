@@ -1,3 +1,3 @@
 output "web_acl_id" {
-  value = aws_cloudformation_stack.webacl.outputs.WebACLARN
+  value = aws_wafv2_web_acl.main.arn
 }
