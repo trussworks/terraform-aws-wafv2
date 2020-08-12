@@ -37,13 +37,13 @@ module "alb_wafv2" {
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
-| aws | ~> 2.68 |
+| aws | ~> 2.70 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | ~> 2.68 |
+| aws | ~> 2.70 |
 
 ## Inputs
 
