@@ -58,7 +58,7 @@ variable "managed_rules" {
 
 variable "tags" {
   type        = map(string)
-  description = "A mapping of tags to assign to the bucket."
+  description = "A mapping of tags to assign to the WAFv2 ACL."
   default     = {}
 }
 
