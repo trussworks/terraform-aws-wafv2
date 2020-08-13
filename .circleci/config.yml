@@ -1,9 +1,12 @@
-version: 2
+version: 2.1
+
+references:
+  circleci_docker_primary: &circleci_docker_primary trussworks/circleci-docker-primary:822fac1c30f3bb7d5d595bed5d2dc86265c4f2f0
 
 jobs:
   validate:
     docker:
-      - image: trussworks/circleci-docker-primary:c542b22c7fb95db0a1bbe043928a457ae6fbeaca
+      - image: *circleci_docker_primary
     steps:
       - checkout
       - restore_cache:
@@ -18,7 +21,7 @@ jobs:
             - ~/.cache/pre-commit
 
 workflows:
-  version: 2
+  version: 2.1
   validate:
     jobs:
       - validate
