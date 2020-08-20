@@ -7,6 +7,8 @@ jobs:
   terratest:
     docker:
       - image: *circleci_docker_primary
+        environment:
+        - TEST_RESULTS: /tmp/test-results
     steps:
       - checkout
       - restore_cache:
@@ -31,6 +33,8 @@ jobs:
           key: go-mod-sources-v1-{{ checksum "go.sum" }}
           paths:
             - "~/go/pkg/mod"
+      - store_test_results:
+          path: /tmp/test-results/gotest
 
 workflows:
   version: 2.1
