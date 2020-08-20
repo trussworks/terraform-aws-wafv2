@@ -16,6 +16,12 @@ jobs:
             - pre-commit-dot-cache-{{ checksum ".pre-commit-config.yaml" }}
             - go-mod-sources-v1-{{ checksum "go.sum" }}
       - run:
+          name: Adding go binaries to $PATH
+          command: |
+            echo 'export PATH=${PATH}:~/go/bin' >> $BASH_ENV
+            source $BASH_ENV
+      - run: go get github.com/jstemmer/go-junit-report
+      - run:
           name: Assume role, run pre-commit and run terratest
           command: |
             temp_role=$(aws sts assume-role \
