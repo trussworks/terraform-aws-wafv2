@@ -56,20 +56,24 @@ variable "managed_rules" {
   ]
 }
 
+variable "blocked_ip_sets" {
+  type = list(object({
+    name       = string
+    priority   = number
+    ip_set_arn = string
+  }))
+  description = "List of IP Sets to block."
+  default     = []
+}
+
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the WAFv2 ACL."
   default     = {}
 }
 
-variable "associate_alb" {
-  type        = bool
-  description = "Whether to associate an Application Load Balancer (ALB) with an Web Application Firewall (WAF) Access Control List (ACL)."
-  default     = false
-}
-
 variable "alb_arn" {
   type        = string
-  description = "ARN of the Application Load Balancer (ALB) to be associated with the Web Application Firewall (WAF) Access Control List (ACL)."
+  description = "ARN of the ALB to be associated with the WAFv2 ACL."
   default     = ""
 }
