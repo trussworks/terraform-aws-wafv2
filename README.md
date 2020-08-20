@@ -31,6 +31,7 @@ module "alb_wafv2" {
   scope = "REGIONAL"
 
   alb_arn       = aws_lb.alb.arn
+  associate_alb = true
 }
 ```
 
