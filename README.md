@@ -8,7 +8,7 @@ Creates AWS WAFv2 ACL and supports the following
 
 ## Usage with CloudFront
 
-**Note: The Terraform AWS provider needs to be associated with the us-east-1 region to use with CloudFront.
+**Note: The Terraform AWS provider needs to be associated with the us-east-1 region to use with CloudFront.**
 
 ```hcl
 module "cloudfront_wafv2" {
