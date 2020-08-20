@@ -2,8 +2,9 @@ module "wafv2" {
   source = "../../"
   name   = var.test_name
 
-  scope   = "REGIONAL"
-  alb_arn = aws_lb.alb.arn
+  scope         = "REGIONAL"
+  associate_alb = true
+  alb_arn       = aws_lb.alb.arn
 }
 
 resource "aws_lb" "alb" {

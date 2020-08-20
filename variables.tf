@@ -72,6 +72,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "associate_alb" {
+  type        = bool
+  description = "Whether to associate an ALB with the WAFv2 ACL."
+  default     = false
+}
+
 variable "alb_arn" {
   type        = string
   description = "ARN of the ALB to be associated with the WAFv2 ACL."
