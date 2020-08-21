@@ -6,7 +6,7 @@ module "wafv2" {
 
   rate_based_rule = {
     name : "IP-rate-limit",
-    priority : 30,
+    priority : 55,
     action : "block",
     limit : 100
   }
