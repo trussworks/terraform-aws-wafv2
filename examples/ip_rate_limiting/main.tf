@@ -8,7 +8,7 @@ module "wafv2" {
     name : "IP-rate-limit",
     priority : 30,
     action : "block",
-    limit : 2
+    limit : 100
   }
 
 }
