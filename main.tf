@@ -78,6 +78,69 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
+    dynamic rule {
+      for_each = var.rate_based_rules
+      content {
+        name     = rule.value.name
+        priority = rule.value.priority
+
+       action {
+          block {}
+        }
+
+        statement {
+          rate_based_statement {
+            limit = rule.value.limit
+            aggregate_key_type = "IP"
+          }
+        }
+
+        visibility_config {
+          cloudwatch_metrics_enabled = true
+          metric_name                = rule.value.name
+          sampled_requests_enabled   = true
+        }
+      }
+    }
+
+    dynamic rule {
+      for_each = [for header_name in var.filtered_header_rule.names: {
+        priority  = var.filtered_header_rule.priority + index(var.filtered_header_rule.names, header_name) + 1
+        name =  header_name
+        filter_header = var.filtered_header_rule.filter_header
+      }]
+
+      content {
+        name = replace(rule.value.name, ".", "-")
+        priority = rule.value.priority
+
+        action {
+          allow {}
+        }
+
+        statement {
+          byte_match_statement {
+            field_to_match {
+              single_header {
+                name = rule.value.filter_header
+              }
+            }
+            positional_constraint = "EXACTLY"
+            search_string = rule.value.name
+            text_transformation {
+              priority = rule.value.priority
+              type = "COMPRESS_WHITE_SPACE"
+            }
+          }
+        }
+        visibility_config {
+          cloudwatch_metrics_enabled = true
+          metric_name = replace(rule.value.name, ".", "-")
+          sampled_requests_enabled = true
+        }
+      }
+    }
+
   tags = var.tags
 }
 

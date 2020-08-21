@@ -66,6 +66,30 @@ variable "blocked_ip_sets" {
   default     = []
 }
 
+variable "rate_based_rules" {
+  type = list(object({
+    name     = string
+    priority = number
+    limit    = number
+  }))
+  description = "List of rate based rules to apply"
+  default = []
+}
+
+variable "filtered_header_rule" {
+  type = object({
+    names         = list(string)
+    priority      = number
+    filter_header = string
+  })
+  description = "List of headers to filter by"
+  default = {
+    names       = []
+    priority      = 1
+    filter_header = ""
+  }
+}
+
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the WAFv2 ACL."
