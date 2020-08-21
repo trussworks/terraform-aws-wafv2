@@ -73,7 +73,7 @@ variable "rate_based_rules" {
     limit    = number
   }))
   description = "List of rate based rules to apply"
-  default = []
+  default     = []
 }
 
 variable "filtered_header_rule" {
@@ -84,7 +84,7 @@ variable "filtered_header_rule" {
   })
   description = "List of headers to filter by"
   default = {
-    names       = []
+    names         = []
     priority      = 1
     filter_header = ""
   }

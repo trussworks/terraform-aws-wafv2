@@ -4,8 +4,8 @@ module "wafv2" {
 
   scope = "REGIONAL"
   filtered_header_rule = {
-    names = ["test1", "test2"]
+    names         = ["test1", "test2"]
     filter_header = "host"
-    priority = 1
+    priority      = 1
   }
 }
