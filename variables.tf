@@ -66,14 +66,15 @@ variable "blocked_ip_sets" {
   default     = []
 }
 
-variable "rate_based_rules" {
-  type = list(object({
+variable "rate_based_rule" {
+  type = object({
     name     = string
     priority = number
     limit    = number
-  }))
+    action   = string
+  })
   description = "List of rate based rules to apply"
-  default     = []
+  default     = null
 }
 
 variable "filtered_header_rule" {

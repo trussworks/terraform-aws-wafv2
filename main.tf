@@ -79,13 +79,21 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic rule {
-    for_each = var.rate_based_rules
+    for_each = var.rate_based_rule != null ? [var.rate_based_rule] : []
     content {
       name     = rule.value.name
       priority = rule.value.priority
 
       action {
-        block {}
+        dynamic "allow" {
+          for_each = rule.value.action == "allow" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
       }
 
       statement {

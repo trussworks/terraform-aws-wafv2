@@ -75,6 +75,25 @@ func TestTerraformAwsWafv2headers(t *testing.T)  {
 
 	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
+}
 
+func TestTerraformAwsWafv2headers(t *testing.T)  {
+	t.Parallel()
 
+	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/ip_rate_limiting")
+	testName := fmt.Sprintf("terratest-wafv2-ip-rate-limit-%s", strings.ToLower(random.UniqueId()))
+	awsRegion := "us-west-2"
+
+	terraformOptions := &terraform.Options{
+		TerraformDir: tempTestFolder,
+		Vars: map[string]interface{}{
+			"test_name": testName,
+		},
+		EnvVars: map[string]string{
+			"AWS_DEFAULT_REGION": awsRegion,
+		},
+	}
+
+	defer terraform.Destroy(t, terraformOptions)
+	terraform.InitAndApply(t, terraformOptions)
 }
