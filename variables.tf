@@ -83,7 +83,7 @@ variable "filtered_header_rule" {
     priority      = number
     filter_header = string
   })
-  description = "List of headers to filter by"
+  description = "HTTP header to filter . Currently supports a single header type and multiple header values."
   default = {
     names         = []
     priority      = 1
