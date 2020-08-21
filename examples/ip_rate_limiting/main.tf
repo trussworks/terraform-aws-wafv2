@@ -4,7 +4,7 @@ module "wafv2" {
 
   scope = "REGIONAL"
 
-  rate_based_rule = {
+  ip_rate_based_rule = {
     name : "IP-rate-limit",
     priority : 55,
     action : "block",

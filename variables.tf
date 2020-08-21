@@ -66,7 +66,7 @@ variable "blocked_ip_sets" {
   default     = []
 }
 
-variable "rate_based_rule" {
+variable "ip_rate_based_rule" {
   type = object({
     name     = string
     priority = number
@@ -79,15 +79,17 @@ variable "rate_based_rule" {
 
 variable "filtered_header_rule" {
   type = object({
-    names         = list(string)
-    priority      = number
-    filter_header = string
+    header_types = list(string)
+    priority     = number
+    header_value = string
+    action       = string
   })
   description = "HTTP header to filter . Currently supports a single header type and multiple header values."
   default = {
-    names         = []
-    priority      = 1
-    filter_header = ""
+    header_types = []
+    priority     = 1
+    header_value = ""
+    action       = "block"
   }
 }
 
