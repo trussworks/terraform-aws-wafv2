@@ -17,7 +17,24 @@ repos:
       - id: markdownlint
 
   - repo: git://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.31.0
+    rev: v1.32.0
     hooks:
       - id: terraform_docs
       - id: terraform_fmt
+
+  - repo: local
+    hooks:
+      - id: go-version
+        name: go version
+        entry: scripts/check-go-version
+        language: script
+        types: [go]
+
+  - repo: local
+    hooks:
+      - id: gomod
+        name: gomod
+        entry: scripts/pre-commit-go-mod
+        language: script
+        files: go.mod
+        pass_filenames: false

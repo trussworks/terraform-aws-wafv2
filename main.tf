@@ -1,5 +1,7 @@
 resource "aws_wafv2_web_acl" "main" {
-  name  = var.name
+  name        = var.name
+  description = "WAFv2 ACL for ${var.name}"
+
   scope = var.scope
 
   default_action {
@@ -52,8 +54,31 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
-  tags = var.tags
+  dynamic "rule" {
+    for_each = var.blocked_ip_sets
+    content {
+      name     = rule.value.name
+      priority = rule.value.priority
 
+      action {
+        block {}
+      }
+
+      statement {
+        ip_set_reference_statement {
+          arn = rule.value.ip_set_arn
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = rule.value.name
+        sampled_requests_enabled   = true
+      }
+    }
+  }
+
+  tags = var.tags
 }
 
 resource "aws_wafv2_web_acl_association" "main" {
