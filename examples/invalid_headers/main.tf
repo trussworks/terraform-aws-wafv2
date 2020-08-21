@@ -7,5 +7,6 @@ module "wafv2" {
     header_types = ["test1", "test2"]
     header_value = "host"
     priority     = 1
+    action       = "allow"
   }
 }
