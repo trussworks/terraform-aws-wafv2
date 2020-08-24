@@ -77,7 +77,7 @@ func TestTerraformAwsWafv2Headers(t *testing.T)  {
 	terraform.InitAndApply(t, terraformOptions)
 }
 
-func TestTerraformAwsWafv2ipratelimit(t *testing.T)  {
+func TestTerraformAwsWafv2IpRateLimit(t *testing.T)  {
 	t.Parallel()
 
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/ip_rate_limiting")
