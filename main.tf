@@ -78,6 +78,96 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
+  dynamic rule {
+    for_each = var.ip_rate_based_rule != null ? [var.ip_rate_based_rule] : []
+    content {
+      name     = rule.value.name
+      priority = rule.value.priority
+
+      action {
+        dynamic "allow" {
+          for_each = rule.value.action == "allow" ? [1] : []
+          content {}
+        }
+
+        dynamic "count" {
+          for_each = rule.value.action == "count" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
+      }
+
+      statement {
+        rate_based_statement {
+          limit              = rule.value.limit
+          aggregate_key_type = "IP"
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = rule.value.name
+        sampled_requests_enabled   = true
+      }
+    }
+  }
+
+  dynamic rule {
+    for_each = [for header_name in var.filtered_header_rule.header_types : {
+      priority     = var.filtered_header_rule.priority + index(var.filtered_header_rule.header_types, header_name) + 1
+      name         = header_name
+      header_value = var.filtered_header_rule.header_value
+      action       = var.filtered_header_rule.action
+    }]
+
+    content {
+      name     = replace(rule.value.name, ".", "-")
+      priority = rule.value.priority
+
+      action {
+        dynamic "allow" {
+          for_each = rule.value.action == "allow" ? [1] : []
+          content {}
+        }
+
+        dynamic "count" {
+          for_each = rule.value.action == "count" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
+      }
+
+      statement {
+        byte_match_statement {
+          field_to_match {
+            single_header {
+              name = rule.value.header_value
+            }
+          }
+          positional_constraint = "EXACTLY"
+          search_string         = rule.value.name
+          text_transformation {
+            priority = rule.value.priority
+            type     = "COMPRESS_WHITE_SPACE"
+          }
+        }
+      }
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = replace(rule.value.name, ".", "-")
+        sampled_requests_enabled   = true
+      }
+    }
+  }
+
   tags = var.tags
 }
 

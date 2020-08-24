@@ -66,6 +66,33 @@ variable "blocked_ip_sets" {
   default     = []
 }
 
+variable "ip_rate_based_rule" {
+  type = object({
+    name     = string
+    priority = number
+    limit    = number
+    action   = string
+  })
+  description = "A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span"
+  default     = null
+}
+
+variable "filtered_header_rule" {
+  type = object({
+    header_types = list(string)
+    priority     = number
+    header_value = string
+    action       = string
+  })
+  description = "HTTP header to filter . Currently supports a single header type and multiple header values."
+  default = {
+    header_types = []
+    priority     = 1
+    header_value = ""
+    action       = "block"
+  }
+}
+
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the WAFv2 ACL."
