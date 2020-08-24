@@ -56,7 +56,7 @@ func TestTerraformAwsWafv2IpSets(t *testing.T) {
 
 }
 
-func TestTerraformAwsWafv2headers(t *testing.T)  {
+func TestTerraformAwsWafv2Headers(t *testing.T)  {
 	t.Parallel()
 
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/invalid_headers")
