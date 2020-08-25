@@ -38,3 +38,8 @@ repos:
         language: script
         files: go.mod
         pass_filenames: false
+
+  - repo: git://github.com/golangci/golangci-lint
+    rev: v1.30.0
+    hooks:
+      - id: golangci-lint

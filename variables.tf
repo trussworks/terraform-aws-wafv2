@@ -56,13 +56,14 @@ variable "managed_rules" {
   ]
 }
 
-variable "blocked_ip_sets" {
+variable "ip_sets_rule" {
   type = list(object({
     name       = string
     priority   = number
     ip_set_arn = string
+    action     = string
   }))
-  description = "List of IP Sets to block."
+  description = "A rule to detect web requests coming from particular IP addresses or address ranges."
   default     = []
 }
 
