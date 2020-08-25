@@ -87,6 +87,10 @@ resource "aws_lb_listener" "alb" {
       status_code  = "200"
     }
   }
+
+  timeouts {
+    create = "30m"
+  }
 }
 
 resource "aws_security_group" "lb_sg" {
