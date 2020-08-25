@@ -71,6 +71,10 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
   subnets            = module.vpc.public_subnets
   security_groups    = [aws_security_group.lb_sg.id]
+
+  timeouts {
+    create = "30m"
+  }
 }
 
 resource "aws_lb_listener" "alb" {
@@ -88,9 +92,6 @@ resource "aws_lb_listener" "alb" {
     }
   }
 
-  timeouts {
-    create = "30m"
-  }
 }
 
 resource "aws_security_group" "lb_sg" {
