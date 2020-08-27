@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-VERSION="go1.14"
+VERSION="go1.15"
 
 GOLANG_VERSION=$(go version)
 if [[ $GOLANG_VERSION = *$VERSION* ]]; then

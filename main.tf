@@ -14,7 +14,7 @@ resource "aws_wafv2_web_acl" "main" {
     metric_name                = var.name
   }
 
-  dynamic "rule" {
+  dynamic rule {
     for_each = var.managed_rules
     content {
       name     = rule.value.name
@@ -54,14 +54,27 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
-  dynamic "rule" {
-    for_each = var.blocked_ip_sets
+  dynamic rule {
+    for_each = var.ip_sets_rule
     content {
       name     = rule.value.name
       priority = rule.value.priority
 
       action {
-        block {}
+        dynamic "allow" {
+          for_each = rule.value.action == "allow" ? [1] : []
+          content {}
+        }
+
+        dynamic "count" {
+          for_each = rule.value.action == "count" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
       }
 
       statement {
