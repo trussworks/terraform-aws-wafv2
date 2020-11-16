@@ -7,6 +7,9 @@ Creates AWS WAFv2 ACL and supports the following
 * Blocking IP Sets
 * Rate limiting IPs
 
+## Terraform Versions
+
+Terraform 0.12. Pin module version to ~> 1.0. Submit pull-requests to terraform012 branch.
 
 ## Usage with CloudFront
 
