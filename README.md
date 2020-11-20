@@ -63,7 +63,7 @@ module "wafv2" {
   name   = "wafv2"
   scope = "REGIONAL"
 
-  ip_set_rules = [
+  ip_sets_rule = [
     {
       name       = "blocked_ips"
       action     = "block"
