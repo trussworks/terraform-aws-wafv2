@@ -6,7 +6,7 @@ jobs:
         username: $DOCKER_USERNAME
       environment:
       - TEST_RESULTS: /tmp/test-results
-      image: trussworks/circleci-docker-primary:5c6ec846bf8119dbe64540088e4ab54d94efbd7e
+      image: trussworks/circleci:14ed0ecd3ffe99fbae149dfcf51051a5d2dec8e3
     steps:
     - checkout
     - restore_cache:
@@ -39,7 +39,7 @@ jobs:
     - store_test_results:
         path: /tmp/test-results/gotest
 references:
-  circleci_docker_primary: trussworks/circleci-docker-primary:5c6ec846bf8119dbe64540088e4ab54d94efbd7e
+  circleci: trussworks/circleci:14ed0ecd3ffe99fbae149dfcf51051a5d2dec8e3
 version: 2.1
 workflows:
   validate:
