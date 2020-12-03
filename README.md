@@ -7,6 +7,9 @@ Creates AWS WAFv2 ACL and supports the following
 * Blocking IP Sets
 * Rate limiting IPs
 
+**As of 12/2/2020, AWS GovCloud does not support the `AWSManagedRulesAmazonIpReputationList` managed rule set,
+which is enabled by default in this module. Until AWS supports that rule set, you will need to define your own `managed_rules`.**
+
 ## Terraform Versions
 
 Terraform 0.13. Pin module version to ~> 2.0. Submit pull-requests to master branch.
