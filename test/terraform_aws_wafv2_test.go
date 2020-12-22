@@ -41,7 +41,7 @@ func TestTerraformAwsWafv2Alb(t *testing.T) {
 	// Confirm we can access the ALB
 	AlbDNSName := terraform.Output(t, terraformOptions, "alb_dns_name")
 	url := fmt.Sprintf("http://%s", AlbDNSName)
-	http_helper.HttpGetWithRetry(t, url, nil, 200, fixedResponse, 5, 5*time.Second)
+	http_helper.HttpGetWithRetry(t, url, nil, 200, fixedResponse, 10, 5*time.Second)
 
 	// Apply with rule to block all IP addresses
 	terraformOptions = &terraform.Options{
@@ -59,7 +59,7 @@ func TestTerraformAwsWafv2Alb(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Confirm we get blocked by IP sets rule in the WAF
-	http_helper.HttpGetWithRetryWithCustomValidation(t, url, nil, 5, 5*time.Second, func(status int, body string) bool {
+	http_helper.HttpGetWithRetryWithCustomValidation(t, url, nil, 10, 5*time.Second, func(status int, body string) bool {
 		return status == 403
 	})
 }
