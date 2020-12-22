@@ -14,7 +14,7 @@ resource "aws_wafv2_web_acl" "main" {
     metric_name                = var.name
   }
 
-  dynamic rule {
+  dynamic "rule" {
     for_each = var.managed_rules
     content {
       name     = rule.value.name
@@ -54,7 +54,7 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
-  dynamic rule {
+  dynamic "rule" {
     for_each = var.ip_sets_rule
     content {
       name     = rule.value.name
@@ -91,7 +91,7 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
-  dynamic rule {
+  dynamic "rule" {
     for_each = var.ip_rate_based_rule != null ? [var.ip_rate_based_rule] : []
     content {
       name     = rule.value.name
@@ -129,7 +129,7 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
-  dynamic rule {
+  dynamic "rule" {
     for_each = [for header_name in var.filtered_header_rule.header_types : {
       priority     = var.filtered_header_rule.priority + index(var.filtered_header_rule.header_types, header_name) + 1
       name         = header_name
