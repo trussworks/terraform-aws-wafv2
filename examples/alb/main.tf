@@ -40,7 +40,7 @@ module "wafv2" {
 
   ip_sets_rule = [
     {
-      name       = "${var.test_name}"
+      name       = var.test_name
       priority   = 5
       action     = "count"
       ip_set_arn = aws_wafv2_ip_set.ipset.arn

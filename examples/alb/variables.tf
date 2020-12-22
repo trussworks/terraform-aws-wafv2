@@ -10,6 +10,6 @@ variable "fixed_response" {
   type = string
 }
 
-variable block_all_ips {
+variable "block_all_ips" {
   type = bool
 }
