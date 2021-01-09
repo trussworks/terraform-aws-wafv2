@@ -59,6 +59,25 @@ module "wafv2" {
     action : "block",
     limit : 100
   }
+
+  ip_rate_url_based_rules = [
+    {
+      name : "ip-rate-foo-limit",
+      priority : 8,
+      action : "block",
+      limit : 100,
+      search_string : "/foo/",
+      positional_constraint : "STARTS_WITH"
+    },
+    {
+      name : "ip-rate-bar-limit",
+      priority : 9,
+      action : "block",
+      search_string : "/bar/",
+      positional_constraint : "STARTS_WITH"
+      limit : 200
+    }
+  ]
 }
 
 #
