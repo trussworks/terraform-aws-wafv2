@@ -98,11 +98,6 @@ resource "aws_wafv2_web_acl" "main" {
       priority = rule.value.priority
 
       action {
-        dynamic "allow" {
-          for_each = rule.value.action == "allow" ? [1] : []
-          content {}
-        }
-
         dynamic "count" {
           for_each = rule.value.action == "count" ? [1] : []
           content {}
