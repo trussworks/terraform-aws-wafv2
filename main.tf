@@ -98,6 +98,39 @@ resource "aws_wafv2_web_acl" "main" {
       priority = rule.value.priority
 
       action {
+        dynamic "count" {
+          for_each = rule.value.action == "count" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
+      }
+
+      statement {
+        rate_based_statement {
+          limit              = rule.value.limit
+          aggregate_key_type = "IP"
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = rule.value.name
+        sampled_requests_enabled   = true
+      }
+    }
+  }
+
+  dynamic "rule" {
+    for_each = var.ip_rate_url_based_rules
+    content {
+      name     = rule.value.name
+      priority = rule.value.priority
+
+      action {
         dynamic "allow" {
           for_each = rule.value.action == "allow" ? [1] : []
           content {}
@@ -118,6 +151,19 @@ resource "aws_wafv2_web_acl" "main" {
         rate_based_statement {
           limit              = rule.value.limit
           aggregate_key_type = "IP"
+          scope_down_statement {
+            byte_match_statement {
+              positional_constraint = rule.value.positional_constraint
+              search_string         = rule.value.search_string
+              field_to_match {
+                uri_path {}
+              }
+              text_transformation {
+                priority = 0
+                type     = "URL_DECODE"
+              }
+            }
+          }
         }
       }
 

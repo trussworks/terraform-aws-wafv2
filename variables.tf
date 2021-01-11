@@ -78,6 +78,19 @@ variable "ip_rate_based_rule" {
   default     = null
 }
 
+variable "ip_rate_url_based_rules" {
+  type = list(object({
+    name                  = string
+    priority              = number
+    limit                 = number
+    action                = string
+    search_string         = string
+    positional_constraint = string
+  }))
+  description = "A rate and url based rules tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span"
+  default     = []
+}
+
 variable "filtered_header_rule" {
   type = object({
     header_types = list(string)

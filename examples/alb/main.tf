@@ -48,7 +48,7 @@ module "wafv2" {
     {
       name       = "block-all-ips"
       priority   = 6
-      action     = var.block_all_ips ? "block" : "allow"
+      action     = var.enable_block_all_ips ? "block" : "count"
       ip_set_arn = aws_wafv2_ip_set.block_all_ips.arn
     }
   ]
@@ -56,9 +56,28 @@ module "wafv2" {
   ip_rate_based_rule = {
     name : "ip-rate-limit",
     priority : 7,
-    action : "block",
+    action : var.enable_ip_rate_limit ? "block" : "count",
     limit : 100
   }
+
+  ip_rate_url_based_rules = [
+    {
+      name : "ip-rate-foo-limit",
+      priority : 8,
+      action : var.enable_rate_limit_url_foo ? "block" : "count",
+      limit : 100,
+      search_string : "/foo/",
+      positional_constraint : "STARTS_WITH"
+    },
+    {
+      name : "ip-rate-bar-limit",
+      priority : 9,
+      action : "block",
+      search_string : "/bar/",
+      positional_constraint : "STARTS_WITH"
+      limit : 200
+    }
+  ]
 }
 
 #
