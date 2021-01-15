@@ -124,3 +124,15 @@ variable "alb_arn" {
   description = "ARN of the ALB to be associated with the WAFv2 ACL."
   default     = ""
 }
+
+variable "group_rules" {
+  type = list(object({
+    name            = string
+    arn             = string
+    priority        = number
+    override_action = string
+    excluded_rules  = list(string)
+  }))
+  description = "List of WAFv2 Rule Groups."
+  default     = []
+}
