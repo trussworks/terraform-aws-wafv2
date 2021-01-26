@@ -81,11 +81,11 @@ module "wafv2" {
 
   group_rules = [
     {
-      "excluded_rules" : [],
-      "name" : aws_wafv2_rule_group.block_countries.name,
-      "arn" : aws_wafv2_rule_group.block_countries.arn,
-      "override_action" : "none",
-      "priority" : 10
+      excluded_rules : [],
+      name : aws_wafv2_rule_group.block_countries.name,
+      arn : aws_wafv2_rule_group.block_countries.arn,
+      override_action : "none",
+      priority : 11
     }
   ]
 }
