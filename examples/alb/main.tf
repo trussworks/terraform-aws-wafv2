@@ -78,6 +78,16 @@ module "wafv2" {
       limit : 200
     }
   ]
+
+  group_rules = [
+    {
+      excluded_rules : [],
+      name : aws_wafv2_rule_group.block_countries.name,
+      arn : aws_wafv2_rule_group.block_countries.arn,
+      override_action : "none",
+      priority : 11
+    }
+  ]
 }
 
 #
@@ -154,4 +164,42 @@ module "vpc" {
     "10.0.102.0/24",
     "10.0.103.0/24"
   ]
+}
+
+#
+# WAFv2 Rule Group
+#
+
+resource "aws_wafv2_rule_group" "block_countries" {
+  name     = "rule_group_${var.test_name}"
+  scope    = "REGIONAL"
+  capacity = 1
+
+  rule {
+    name     = "rule-1"
+    priority = 1
+
+    action {
+      block {}
+    }
+
+    statement {
+
+      geo_match_statement {
+        country_codes = ["UA"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = false
+      metric_name                = "friendly-rule-metric-name"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = false
+    metric_name                = "friendly-metric-name"
+    sampled_requests_enabled   = false
+  }
 }
