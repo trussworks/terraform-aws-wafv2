@@ -139,6 +139,6 @@ variable "group_rules" {
 
 variable "default_action" {
   type        = string
-  description = "The action to perform if none of the rules contained in the WebACL match"
+  description = "The action to perform if none of the rules contained in the WebACL match."
   default     = "allow"
 }
