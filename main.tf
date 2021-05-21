@@ -92,33 +92,33 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.ip_rate_based_rule != null ? [var.ip_rate_based_rule] : []
+    for_each = var.ip_rate_based_rule != null ? var.ip_rate_based_rule : {}
     content {
-      name     = rule.value.name
-      priority = rule.value.priority
+      name     = var.ip_rate_based_rule.name
+      priority = var.ip_rate_based_rule.priority
 
       action {
         dynamic "count" {
-          for_each = rule.value.action == "count" ? [1] : []
+          for_each = var.ip_rate_based_rule.action == "count" ? [1] : []
           content {}
         }
 
         dynamic "block" {
-          for_each = rule.value.action == "block" ? [1] : []
+          for_each = var.ip_rate_based_rule.action == "block" ? [1] : []
           content {}
         }
       }
 
       statement {
         rate_based_statement {
-          limit              = rule.value.limit
+          limit              = var.ip_rate_based_rule.limit
           aggregate_key_type = "IP"
         }
       }
 
       visibility_config {
         cloudwatch_metrics_enabled = true
-        metric_name                = rule.value.name
+        metric_name                = var.ip_rate_based_rule.name
         sampled_requests_enabled   = true
       }
     }
