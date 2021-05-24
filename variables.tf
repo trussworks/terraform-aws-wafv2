@@ -136,9 +136,3 @@ variable "group_rules" {
   description = "List of WAFv2 Rule Groups."
   default     = []
 }
-
-variable "default_action" {
-  type        = string
-  description = "The action to perform if none of the rules contained in the WebACL match."
-  default     = "allow"
-}
