@@ -119,7 +119,7 @@ func TestTerraformAwsWafv2AlbUrlRateLimit(t *testing.T) {
 
 	// Generate enough load to trigger the rate limits at the WAF and
 	// confirm that we start seeing 403s to /foo/
-	requests := 1000
+	requests := 5000
 	logger.Logf(t, "Generating %d HTTP GET requests to %s", requests, url)
 	simpleDos(url, requests)
 	http_helper.HttpGetWithRetryWithCustomValidation(t, url, nil, 3, time.Millisecond, func(status int, body string) bool {
@@ -168,7 +168,7 @@ func TestTerraformAwsWafv2AlbIpRateLimit(t *testing.T) {
 
 	// Generate enough load to trigger the rate limits at the WAF and
 	// confirm that we start seeing 403s
-	requests := 1000
+	requests := 5000
 	logger.Logf(t, "Generating %d HTTP GET requests to %s", requests, url)
 	simpleDos(url, requests)
 	http_helper.HttpGetWithRetryWithCustomValidation(t, url, nil, 3, time.Millisecond, func(status int, body string) bool {
