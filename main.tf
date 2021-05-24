@@ -5,7 +5,15 @@ resource "aws_wafv2_web_acl" "main" {
   scope = var.scope
 
   default_action {
-    allow {}
+    dynamic "allow" {
+      for_each = var.default_action == "allow" ? [1] : []
+      content {}
+    }
+
+    dynamic "block" {
+      for_each = var.default_action == "block" ? [1] : []
+      content {}
+    }
   }
 
   visibility_config {
