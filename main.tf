@@ -17,8 +17,8 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   visibility_config {
-    cloudwatch_metrics_enabled = true
-    sampled_requests_enabled   = true
+    cloudwatch_metrics_enabled = var.cloudwatch_metrics_enabled
+    sampled_requests_enabled   = var.sampled_requests_enabled
     metric_name                = var.name
   }
 
@@ -55,9 +55,9 @@ resource "aws_wafv2_web_acl" "main" {
       }
 
       visibility_config {
-        cloudwatch_metrics_enabled = true
+        cloudwatch_metrics_enabled = rule.value.cloudwatch_metrics_enabled
         metric_name                = rule.value.name
-        sampled_requests_enabled   = true
+        sampled_requests_enabled   = rule.value.sampled_requests_enabled
       }
     }
   }
@@ -92,9 +92,9 @@ resource "aws_wafv2_web_acl" "main" {
       }
 
       visibility_config {
-        cloudwatch_metrics_enabled = true
+        cloudwatch_metrics_enabled = rule.value.cloudwatch_metrics_enabled
         metric_name                = rule.value.name
-        sampled_requests_enabled   = true
+        sampled_requests_enabled   = rule.value.sampled_requests_enabled
       }
     }
   }
@@ -125,9 +125,9 @@ resource "aws_wafv2_web_acl" "main" {
       }
 
       visibility_config {
-        cloudwatch_metrics_enabled = true
+        cloudwatch_metrics_enabled = rule.value.cloudwatch_metrics_enabled
         metric_name                = rule.value.name
-        sampled_requests_enabled   = true
+        sampled_requests_enabled   = rule.value.sampled_requests_enabled
       }
     }
   }
@@ -176,9 +176,9 @@ resource "aws_wafv2_web_acl" "main" {
       }
 
       visibility_config {
-        cloudwatch_metrics_enabled = true
+        cloudwatch_metrics_enabled = rule.value.cloudwatch_metrics_enabled
         metric_name                = rule.value.name
-        sampled_requests_enabled   = true
+        sampled_requests_enabled   = rule.value.sampled_requests_enabled
       }
     }
   }
@@ -228,9 +228,9 @@ resource "aws_wafv2_web_acl" "main" {
         }
       }
       visibility_config {
-        cloudwatch_metrics_enabled = true
+        cloudwatch_metrics_enabled = rule.value.cloudwatch_metrics_enabled
         metric_name                = replace(rule.value.name, ".", "-")
-        sampled_requests_enabled   = true
+        sampled_requests_enabled   = rule.value.sampled_requests_enabled
       }
     }
   }
@@ -267,9 +267,9 @@ resource "aws_wafv2_web_acl" "main" {
       }
 
       visibility_config {
-        cloudwatch_metrics_enabled = true
+        cloudwatch_metrics_enabled = rule.value.cloudwatch_metrics_enabled
         metric_name                = rule.value.name
-        sampled_requests_enabled   = true
+        sampled_requests_enabled   = rule.value.sampled_requests_enabled
       }
     }
   }
