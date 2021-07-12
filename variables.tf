@@ -10,58 +10,74 @@ variable "scope" {
 
 variable "managed_rules" {
   type = list(object({
-    name            = string
-    priority        = number
-    override_action = string
-    excluded_rules  = list(string)
+    name                       = string
+    priority                   = number
+    override_action            = string
+    cloudwatch_metrics_enabled = bool
+    sampled_requests_enabled   = bool
+    excluded_rules             = list(string)
   }))
   description = "List of Managed WAF rules."
   default = [
     {
-      name            = "AWSManagedRulesCommonRuleSet",
-      priority        = 10
-      override_action = "none"
-      excluded_rules  = []
+      name                       = "AWSManagedRulesCommonRuleSet",
+      priority                   = 10
+      override_action            = "none"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled   = true
+      excluded_rules             = []
     },
     {
-      name            = "AWSManagedRulesAmazonIpReputationList",
-      priority        = 20
-      override_action = "none"
-      excluded_rules  = []
+      name                       = "AWSManagedRulesAmazonIpReputationList",
+      priority                   = 20
+      override_action            = "none"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled   = true
+      excluded_rules             = []
     },
     {
-      name            = "AWSManagedRulesKnownBadInputsRuleSet",
-      priority        = 30
-      override_action = "none"
-      excluded_rules  = []
+      name                       = "AWSManagedRulesKnownBadInputsRuleSet",
+      priority                   = 30
+      override_action            = "none"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled   = true
+      excluded_rules             = []
     },
     {
-      name            = "AWSManagedRulesSQLiRuleSet",
-      priority        = 40
-      override_action = "none"
-      excluded_rules  = []
+      name                       = "AWSManagedRulesSQLiRuleSet",
+      priority                   = 40
+      override_action            = "none"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled   = true
+      excluded_rules             = []
     },
     {
-      name            = "AWSManagedRulesLinuxRuleSet",
-      priority        = 50
-      override_action = "none"
-      excluded_rules  = []
+      name                       = "AWSManagedRulesLinuxRuleSet",
+      priority                   = 50
+      override_action            = "none"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled   = true
+      excluded_rules             = []
     },
     {
-      name            = "AWSManagedRulesUnixRuleSet",
-      priority        = 60
-      override_action = "none"
-      excluded_rules  = []
+      name                       = "AWSManagedRulesUnixRuleSet",
+      priority                   = 60
+      override_action            = "none"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled   = true
+      excluded_rules             = []
     }
   ]
 }
 
 variable "ip_sets_rule" {
   type = list(object({
-    name       = string
-    priority   = number
-    ip_set_arn = string
-    action     = string
+    name                       = string
+    priority                   = number
+    ip_set_arn                 = string
+    action                     = string
+    cloudwatch_metrics_enabled = bool
+    sampled_requests_enabled   = bool
   }))
   description = "A rule to detect web requests coming from particular IP addresses or address ranges."
   default     = []
@@ -69,10 +85,12 @@ variable "ip_sets_rule" {
 
 variable "ip_rate_based_rule" {
   type = object({
-    name     = string
-    priority = number
-    limit    = number
-    action   = string
+    name                       = string
+    priority                   = number
+    limit                      = number
+    action                     = string
+    cloudwatch_metrics_enabled = bool
+    sampled_requests_enabled   = bool
   })
   description = "A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span"
   default     = null
@@ -80,12 +98,14 @@ variable "ip_rate_based_rule" {
 
 variable "ip_rate_url_based_rules" {
   type = list(object({
-    name                  = string
-    priority              = number
-    limit                 = number
-    action                = string
-    search_string         = string
-    positional_constraint = string
+    name                       = string
+    priority                   = number
+    limit                      = number
+    action                     = string
+    search_string              = string
+    positional_constraint      = string
+    cloudwatch_metrics_enabled = bool
+    sampled_requests_enabled   = bool
   }))
   description = "A rate and url based rules tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span"
   default     = []
@@ -93,17 +113,21 @@ variable "ip_rate_url_based_rules" {
 
 variable "filtered_header_rule" {
   type = object({
-    header_types = list(string)
-    priority     = number
-    header_value = string
-    action       = string
+    header_types               = list(string)
+    priority                   = number
+    header_value               = string
+    action                     = string
+    cloudwatch_metrics_enabled = bool
+    sampled_requests_enabled   = bool
   })
   description = "HTTP header to filter . Currently supports a single header type and multiple header values."
   default = {
-    header_types = []
-    priority     = 1
-    header_value = ""
-    action       = "block"
+    header_types               = []
+    priority                   = 1
+    header_value               = ""
+    action                     = "block"
+    cloudwatch_metrics_enabled = true
+    sampled_requests_enabled   = true
   }
 }
 
@@ -127,11 +151,13 @@ variable "alb_arn" {
 
 variable "group_rules" {
   type = list(object({
-    name            = string
-    arn             = string
-    priority        = number
-    override_action = string
-    excluded_rules  = list(string)
+    name                       = string
+    arn                        = string
+    priority                   = number
+    override_action            = string
+    cloudwatch_metrics_enabled = bool
+    sampled_requests_enabled   = bool
+    excluded_rules             = list(string)
   }))
   description = "List of WAFv2 Rule Groups."
   default     = []
@@ -141,4 +167,16 @@ variable "default_action" {
   type        = string
   description = "The action to perform if none of the rules contained in the WebACL match."
   default     = "allow"
+}
+
+variable "cloudwatch_metrics_enabled" {
+  type        = bool
+  description = "Whether to enable Cloudwatch metrics."
+  default     = true
+}
+
+variable "sampled_requests_enabled" {
+  type        = bool
+  description = "Whether to store sample requests."
+  default     = true
 }
