@@ -51,6 +51,8 @@ resource "aws_wafv2_web_acl" "main" {
               name = excluded_rule.value
             }
           }
+
+          scope_down_statement = rule.value.scope_down_statement
         }
       }
 
@@ -121,6 +123,7 @@ resource "aws_wafv2_web_acl" "main" {
         rate_based_statement {
           limit              = rule.value.limit
           aggregate_key_type = "IP"
+          scope_down_statement = rule.value.statement
         }
       }
 

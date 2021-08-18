@@ -14,6 +14,7 @@ variable "managed_rules" {
     priority        = number
     override_action = string
     excluded_rules  = list(string)
+    scope_down_statement = statement
   }))
   description = "List of Managed WAF rules."
   default = [
@@ -22,36 +23,44 @@ variable "managed_rules" {
       priority        = 10
       override_action = "none"
       excluded_rules  = []
+      scope_down_statement = null
     },
     {
       name            = "AWSManagedRulesAmazonIpReputationList",
       priority        = 20
       override_action = "none"
       excluded_rules  = []
+      scope_down_statement = null
+
     },
     {
       name            = "AWSManagedRulesKnownBadInputsRuleSet",
       priority        = 30
       override_action = "none"
       excluded_rules  = []
+      scope_down_statement = null
+
     },
     {
       name            = "AWSManagedRulesSQLiRuleSet",
       priority        = 40
       override_action = "none"
       excluded_rules  = []
+      scope_down_statement = null
     },
     {
       name            = "AWSManagedRulesLinuxRuleSet",
       priority        = 50
       override_action = "none"
       excluded_rules  = []
+      scope_down_statement = null
     },
     {
       name            = "AWSManagedRulesUnixRuleSet",
       priority        = 60
       override_action = "none"
       excluded_rules  = []
+      scope_down_statement = null
     }
   ]
 }
@@ -73,6 +82,7 @@ variable "ip_rate_based_rule" {
     priority = number
     limit    = number
     action   = string
+    scope_down_statement = statement
   })
   description = "A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span"
   default     = null
