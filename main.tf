@@ -121,8 +121,8 @@ resource "aws_wafv2_web_acl" "main" {
 
       statement {
         rate_based_statement {
-          limit              = rule.value.limit
-          aggregate_key_type = "IP"
+          limit                = rule.value.limit
+          aggregate_key_type   = "IP"
           scope_down_statement = rule.value.statement
         }
       }
