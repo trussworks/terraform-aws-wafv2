@@ -14,6 +14,7 @@ variable "managed_rules" {
     priority        = number
     override_action = string
     excluded_rules  = list(string)
+    vendor_name     = string
   }))
   description = "List of Managed WAF rules."
   default = [
@@ -22,36 +23,42 @@ variable "managed_rules" {
       priority        = 10
       override_action = "none"
       excluded_rules  = []
+      vendor_name     = "AWS"
     },
     {
       name            = "AWSManagedRulesAmazonIpReputationList",
       priority        = 20
       override_action = "none"
       excluded_rules  = []
+      vendor_name     = "AWS"
     },
     {
       name            = "AWSManagedRulesKnownBadInputsRuleSet",
       priority        = 30
       override_action = "none"
       excluded_rules  = []
+      vendor_name     = "AWS"
     },
     {
       name            = "AWSManagedRulesSQLiRuleSet",
       priority        = 40
       override_action = "none"
       excluded_rules  = []
+      vendor_name     = "AWS"
     },
     {
       name            = "AWSManagedRulesLinuxRuleSet",
       priority        = 50
       override_action = "none"
       excluded_rules  = []
+      vendor_name     = "AWS"
     },
     {
       name            = "AWSManagedRulesUnixRuleSet",
       priority        = 60
       override_action = "none"
       excluded_rules  = []
+      vendor_name     = "AWS"
     }
   ]
 }
