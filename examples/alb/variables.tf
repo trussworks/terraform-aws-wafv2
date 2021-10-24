@@ -10,6 +10,14 @@ variable "fixed_response" {
   type = string
 }
 
-variable block_all_ips {
+variable "enable_block_all_ips" {
+  type = bool
+}
+
+variable "enable_ip_rate_limit" {
+  type = bool
+}
+
+variable "enable_rate_limit_url_foo" {
   type = bool
 }

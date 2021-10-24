@@ -78,6 +78,19 @@ variable "ip_rate_based_rule" {
   default     = null
 }
 
+variable "ip_rate_url_based_rules" {
+  type = list(object({
+    name                  = string
+    priority              = number
+    limit                 = number
+    action                = string
+    search_string         = string
+    positional_constraint = string
+  }))
+  description = "A rate and url based rules tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span"
+  default     = []
+}
+
 variable "filtered_header_rule" {
   type = object({
     header_types = list(string)
@@ -110,4 +123,22 @@ variable "alb_arn" {
   type        = string
   description = "ARN of the ALB to be associated with the WAFv2 ACL."
   default     = ""
+}
+
+variable "group_rules" {
+  type = list(object({
+    name            = string
+    arn             = string
+    priority        = number
+    override_action = string
+    excluded_rules  = list(string)
+  }))
+  description = "List of WAFv2 Rule Groups."
+  default     = []
+}
+
+variable "default_action" {
+  type        = string
+  description = "The action to perform if none of the rules contained in the WebACL match."
+  default     = "allow"
 }

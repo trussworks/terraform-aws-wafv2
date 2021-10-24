@@ -40,7 +40,7 @@ module "wafv2" {
 
   ip_sets_rule = [
     {
-      name       = "${var.test_name}"
+      name       = var.test_name
       priority   = 5
       action     = "count"
       ip_set_arn = aws_wafv2_ip_set.ipset.arn
@@ -48,7 +48,7 @@ module "wafv2" {
     {
       name       = "block-all-ips"
       priority   = 6
-      action     = var.block_all_ips ? "block" : "allow"
+      action     = var.enable_block_all_ips ? "block" : "count"
       ip_set_arn = aws_wafv2_ip_set.block_all_ips.arn
     }
   ]
@@ -56,9 +56,38 @@ module "wafv2" {
   ip_rate_based_rule = {
     name : "ip-rate-limit",
     priority : 7,
-    action : "block",
+    action : var.enable_ip_rate_limit ? "block" : "count",
     limit : 100
   }
+
+  ip_rate_url_based_rules = [
+    {
+      name : "ip-rate-foo-limit",
+      priority : 8,
+      action : var.enable_rate_limit_url_foo ? "block" : "count",
+      limit : 100,
+      search_string : "/foo/",
+      positional_constraint : "STARTS_WITH"
+    },
+    {
+      name : "ip-rate-bar-limit",
+      priority : 9,
+      action : "block",
+      search_string : "/bar/",
+      positional_constraint : "STARTS_WITH"
+      limit : 200
+    }
+  ]
+
+  group_rules = [
+    {
+      excluded_rules : [],
+      name : aws_wafv2_rule_group.block_countries.name,
+      arn : aws_wafv2_rule_group.block_countries.arn,
+      override_action : "none",
+      priority : 11
+    }
+  ]
 }
 
 #
@@ -135,4 +164,42 @@ module "vpc" {
     "10.0.102.0/24",
     "10.0.103.0/24"
   ]
+}
+
+#
+# WAFv2 Rule Group
+#
+
+resource "aws_wafv2_rule_group" "block_countries" {
+  name     = "rule_group_${var.test_name}"
+  scope    = "REGIONAL"
+  capacity = 1
+
+  rule {
+    name     = "rule-1"
+    priority = 1
+
+    action {
+      block {}
+    }
+
+    statement {
+
+      geo_match_statement {
+        country_codes = ["UA"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = false
+      metric_name                = "friendly-rule-metric-name"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = false
+    metric_name                = "friendly-metric-name"
+    sampled_requests_enabled   = false
+  }
 }
