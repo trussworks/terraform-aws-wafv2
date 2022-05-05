@@ -1,6 +1,9 @@
 linters:
   enable:
-     - gosec
-     - golint
-     - gofmt
-     - goimports
+    - gosec
+    - revive
+    - gofmt
+    - goimports
+
+run:
+  timeout: 2m
