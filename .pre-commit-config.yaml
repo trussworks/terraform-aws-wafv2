@@ -40,6 +40,6 @@ repos:
         pass_filenames: false
 
   - repo: https://github.com/golangci/golangci-lint
-    rev: v1.36.0
+    rev: v1.45.2
     hooks:
       - id: golangci-lint
