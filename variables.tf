@@ -100,10 +100,11 @@ variable "filtered_header_rule" {
   })
   description = "HTTP header to filter . Currently supports a single header type and multiple header values."
   default = {
-    header_types = []
-    priority     = 1
-    header_value = ""
-    action       = "block"
+    header_types  = []
+    priority      = 1
+    header_value  = ""
+    action        = "block"
+    search_string = string
   }
 }
 

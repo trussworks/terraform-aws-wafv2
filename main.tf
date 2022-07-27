@@ -220,7 +220,7 @@ resource "aws_wafv2_web_acl" "main" {
             }
           }
           positional_constraint = "EXACTLY"
-          search_string         = rule.value.name
+          search_string         = rule.value.search_string != "" ? rule.value.search_string : rule.value.name
           text_transformation {
             priority = rule.value.priority
             type     = "COMPRESS_WHITE_SPACE"
