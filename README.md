@@ -50,8 +50,8 @@ module "alb_wafv2" {
   source  = "trussworks/wafv2/aws"
   version = "0.0.1"
 
-  name  = "alb-web-acl"
-  scope = "REGIONAL"
+  name  = "cloudfront-web-acl"
+  scope = "CLOUDFRONT"
 
   enable_logging = true
   log_destination_arns = [
