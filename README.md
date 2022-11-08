@@ -80,14 +80,14 @@ module "wafv2" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
+| terraform | >= 0.13.0 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
+| aws | >= 3.0 |
 
 ## Modules
 
@@ -104,24 +104,24 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_alb_arn"></a> [alb\_arn](#input\_alb\_arn) | ARN of the ALB to be associated with the WAFv2 ACL. | `string` | `""` | no |
-| <a name="input_associate_alb"></a> [associate\_alb](#input\_associate\_alb) | Whether to associate an ALB with the WAFv2 ACL. | `bool` | `false` | no |
-| <a name="input_default_action"></a> [default\_action](#input\_default\_action) | The action to perform if none of the rules contained in the WebACL match. | `string` | `"allow"` | no |
-| <a name="input_filtered_header_rule"></a> [filtered\_header\_rule](#input\_filtered\_header\_rule) | HTTP header to filter . Currently supports a single header type and multiple header values. | <pre>object({<br>    header_types = list(string)<br>    priority     = number<br>    header_value = string<br>    action       = string<br>  })</pre> | <pre>{<br>  "action": "block",<br>  "header_types": [],<br>  "header_value": "",<br>  "priority": 1<br>}</pre> | no |
-| <a name="input_group_rules"></a> [group\_rules](#input\_group\_rules) | List of WAFv2 Rule Groups. | <pre>list(object({<br>    name            = string<br>    arn             = string<br>    priority        = number<br>    override_action = string<br>    excluded_rules  = list(string)<br>  }))</pre> | `[]` | no |
-| <a name="input_ip_rate_based_rule"></a> [ip\_rate\_based\_rule](#input\_ip\_rate\_based\_rule) | A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span | <pre>object({<br>    name     = string<br>    priority = number<br>    limit    = number<br>    action   = string<br>  })</pre> | `null` | no |
-| <a name="input_ip_rate_url_based_rules"></a> [ip\_rate\_url\_based\_rules](#input\_ip\_rate\_url\_based\_rules) | A rate and url based rules tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span | <pre>list(object({<br>    name                  = string<br>    priority              = number<br>    limit                 = number<br>    action                = string<br>    search_string         = string<br>    positional_constraint = string<br>  }))</pre> | `[]` | no |
-| <a name="input_ip_sets_rule"></a> [ip\_sets\_rule](#input\_ip\_sets\_rule) | A rule to detect web requests coming from particular IP addresses or address ranges. | <pre>list(object({<br>    name       = string<br>    priority   = number<br>    ip_set_arn = string<br>    action     = string<br>  }))</pre> | `[]` | no |
-| <a name="input_managed_rules"></a> [managed\_rules](#input\_managed\_rules) | List of Managed WAF rules. | <pre>list(object({<br>    name            = string<br>    priority        = number<br>    override_action = string<br>    excluded_rules  = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "excluded_rules": [],<br>    "name": "AWSManagedRulesCommonRuleSet",<br>    "override_action": "none",<br>    "priority": 10<br>  },<br>  {<br>    "excluded_rules": [],<br>    "name": "AWSManagedRulesAmazonIpReputationList",<br>    "override_action": "none",<br>    "priority": 20<br>  },<br>  {<br>    "excluded_rules": [],<br>    "name": "AWSManagedRulesKnownBadInputsRuleSet",<br>    "override_action": "none",<br>    "priority": 30<br>  },<br>  {<br>    "excluded_rules": [],<br>    "name": "AWSManagedRulesSQLiRuleSet",<br>    "override_action": "none",<br>    "priority": 40<br>  },<br>  {<br>    "excluded_rules": [],<br>    "name": "AWSManagedRulesLinuxRuleSet",<br>    "override_action": "none",<br>    "priority": 50<br>  },<br>  {<br>    "excluded_rules": [],<br>    "name": "AWSManagedRulesUnixRuleSet",<br>    "override_action": "none",<br>    "priority": 60<br>  }<br>]</pre> | no |
-| <a name="input_name"></a> [name](#input\_name) | A friendly name of the WebACL. | `string` | n/a | yes |
-| <a name="input_scope"></a> [scope](#input\_scope) | The scope of this Web ACL. Valid options: CLOUDFRONT, REGIONAL. | `string` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the WAFv2 ACL. | `map(string)` | `{}` | no |
+| alb\_arn | ARN of the ALB to be associated with the WAFv2 ACL. | `string` | `""` | no |
+| associate\_alb | Whether to associate an ALB with the WAFv2 ACL. | `bool` | `false` | no |
+| default\_action | The action to perform if none of the rules contained in the WebACL match. | `string` | `"allow"` | no |
+| filtered\_header\_rule | HTTP header to filter . Currently supports a single header type and multiple header values. | ```object({ header_types = list(string) priority = number header_value = string action = string })``` | ```{ "action": "block", "header_types": [], "header_value": "", "priority": 1 }``` | no |
+| group\_rules | List of WAFv2 Rule Groups. | ```list(object({ name = string arn = string priority = number override_action = string excluded_rules = list(string) }))``` | `[]` | no |
+| ip\_rate\_based\_rule | A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span | ```object({ name = string priority = number limit = number action = string })``` | `null` | no |
+| ip\_rate\_url\_based\_rules | A rate and url based rules tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span | ```list(object({ name = string priority = number limit = number action = string search_string = string positional_constraint = string }))``` | `[]` | no |
+| ip\_sets\_rule | A rule to detect web requests coming from particular IP addresses or address ranges. | ```list(object({ name = string priority = number ip_set_arn = string action = string }))``` | `[]` | no |
+| managed\_rules | List of Managed WAF rules. | ```list(object({ name = string priority = number override_action = string excluded_rules = list(string) }))``` | ```[ { "excluded_rules": [], "name": "AWSManagedRulesCommonRuleSet", "override_action": "none", "priority": 10 }, { "excluded_rules": [], "name": "AWSManagedRulesAmazonIpReputationList", "override_action": "none", "priority": 20 }, { "excluded_rules": [], "name": "AWSManagedRulesKnownBadInputsRuleSet", "override_action": "none", "priority": 30 }, { "excluded_rules": [], "name": "AWSManagedRulesSQLiRuleSet", "override_action": "none", "priority": 40 }, { "excluded_rules": [], "name": "AWSManagedRulesLinuxRuleSet", "override_action": "none", "priority": 50 }, { "excluded_rules": [], "name": "AWSManagedRulesUnixRuleSet", "override_action": "none", "priority": 60 } ]``` | no |
+| name | A friendly name of the WebACL. | `string` | n/a | yes |
+| scope | The scope of this Web ACL. Valid options: CLOUDFRONT, REGIONAL. | `string` | n/a | yes |
+| tags | A mapping of tags to assign to the WAFv2 ACL. | `map(string)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_web_acl_id"></a> [web\_acl\_id](#output\_web\_acl\_id) | The ARN of the WAF WebACL. |
+| web\_acl\_id | The ARN of the WAF WebACL. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Developer Setup
