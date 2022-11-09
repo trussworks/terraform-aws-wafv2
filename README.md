@@ -43,6 +43,23 @@ module "alb_wafv2" {
 }
 ```
 
+## Usage with Logging Configuraion of CloudWatchLogs
+
+```hcl
+module "alb_wafv2" {
+  source  = "trussworks/wafv2/aws"
+  version = "0.0.1"
+
+  name  = "cloudfront-web-acl"
+  scope = "CLOUDFRONT"
+
+  enable_logging = true
+  log_destination_arns = [
+    aws_cloudwatch_log_group.logs.arn
+  ]
+}
+```
+
 ## Usage blocking IP Sets
 
 ```hcl
