@@ -41,9 +41,3 @@ repos:
         args:
           - --args=--config=.terraform-docs.yml
       - id: terraform_fmt
-
-  - repo: https://github.com/golangci/golangci-lint
-    rev: v1.50.1
-    hooks:
-      - id: golangci-lint
-        entry: golangci-lint run --fix --timeout 300s
