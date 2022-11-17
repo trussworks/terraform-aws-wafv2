@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-#
-# go mod tidy will alter go.mod or go.sum if it finds any discrepancies
-#
-
-go mod tidy -v

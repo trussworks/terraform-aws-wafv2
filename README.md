@@ -2,11 +2,11 @@
 
 Creates AWS WAFv2 ACL and supports the following
 
-* AWS Managed Rule Sets
-* Associating with Application Load Balancers (ALB)
-* Blocking IP Sets
-* Global IP Rate limiting
-* Custom IP rate limiting for different URLs
+- AWS Managed Rule Sets
+- Associating with Application Load Balancers (ALB)
+- Blocking IP Sets
+- Global IP Rate limiting
+- Custom IP rate limiting for different URLs
 
 ## Terraform Versions
 
@@ -116,6 +116,7 @@ No modules.
 |------|------|
 | [aws_wafv2_web_acl.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl) | resource |
 | [aws_wafv2_web_acl_association.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl_association) | resource |
+| [aws_wafv2_web_acl_logging_configuration.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl_logging_configuration) | resource |
 
 ## Inputs
 
@@ -124,11 +125,13 @@ No modules.
 | alb\_arn | ARN of the ALB to be associated with the WAFv2 ACL. | `string` | `""` | no |
 | associate\_alb | Whether to associate an ALB with the WAFv2 ACL. | `bool` | `false` | no |
 | default\_action | The action to perform if none of the rules contained in the WebACL match. | `string` | `"allow"` | no |
+| enable\_logging | Whether to associate Logging resource with the WAFv2 ACL. | `bool` | `false` | no |
 | filtered\_header\_rule | HTTP header to filter . Currently supports a single header type and multiple header values. | ```object({ header_types = list(string) priority = number header_value = string action = string })``` | ```{ "action": "block", "header_types": [], "header_value": "", "priority": 1 }``` | no |
 | group\_rules | List of WAFv2 Rule Groups. | ```list(object({ name = string arn = string priority = number override_action = string excluded_rules = list(string) }))``` | `[]` | no |
 | ip\_rate\_based\_rule | A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span | ```object({ name = string priority = number limit = number action = string })``` | `null` | no |
 | ip\_rate\_url\_based\_rules | A rate and url based rules tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span | ```list(object({ name = string priority = number limit = number action = string search_string = string positional_constraint = string }))``` | `[]` | no |
 | ip\_sets\_rule | A rule to detect web requests coming from particular IP addresses or address ranges. | ```list(object({ name = string priority = number ip_set_arn = string action = string }))``` | `[]` | no |
+| log\_destination\_arns | The Amazon Kinesis Data Firehose, Cloudwatch Log log group, or S3 bucket Amazon Resource Names (ARNs) that you want to associate with the web ACL. | `list(string)` | `[]` | no |
 | managed\_rules | List of Managed WAF rules. | ```list(object({ name = string priority = number override_action = string excluded_rules = list(string) }))``` | ```[ { "excluded_rules": [], "name": "AWSManagedRulesCommonRuleSet", "override_action": "none", "priority": 10 }, { "excluded_rules": [], "name": "AWSManagedRulesAmazonIpReputationList", "override_action": "none", "priority": 20 }, { "excluded_rules": [], "name": "AWSManagedRulesKnownBadInputsRuleSet", "override_action": "none", "priority": 30 }, { "excluded_rules": [], "name": "AWSManagedRulesSQLiRuleSet", "override_action": "none", "priority": 40 }, { "excluded_rules": [], "name": "AWSManagedRulesLinuxRuleSet", "override_action": "none", "priority": 50 }, { "excluded_rules": [], "name": "AWSManagedRulesUnixRuleSet", "override_action": "none", "priority": 60 } ]``` | no |
 | name | A friendly name of the WebACL. | `string` | n/a | yes |
 | scope | The scope of this Web ACL. Valid options: CLOUDFRONT, REGIONAL. | `string` | n/a | yes |
@@ -149,18 +152,3 @@ Install dependencies (macOS)
 brew install pre-commit go terraform terraform-docs
 pre-commit install --install-hooks
 ```
-
-### Testing
-
-[Terratest](https://github.com/gruntwork-io/terratest) is being used for
-automated testing with this module. Tests in the `test` folder can be run
-locally by running the following command:
-
-```text
-make test
-```
-
-Or with aws-vault:
-
-```text
-AWS_VAULT_KEYCHAIN_NAME=<NAME> aws-vault exec <PROFILE> -- make test
