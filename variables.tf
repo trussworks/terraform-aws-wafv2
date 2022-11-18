@@ -126,6 +126,18 @@ variable "alb_arn" {
   default     = ""
 }
 
+variable "enable_logging" {
+  type        = bool
+  description = "Whether to associate Logging resource with the WAFv2 ACL."
+  default     = false
+}
+
+variable "log_destination_arns" {
+  type        = list(string)
+  description = "The Amazon Kinesis Data Firehose, Cloudwatch Log log group, or S3 bucket Amazon Resource Names (ARNs) that you want to associate with the web ACL."
+  default     = []
+}
+
 variable "group_rules" {
   type = list(object({
     name            = string
