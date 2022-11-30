@@ -93,17 +93,19 @@ variable "ip_rate_url_based_rules" {
 
 variable "filtered_header_rule" {
   type = object({
-    header_types = list(string)
-    priority     = number
-    header_value = string
-    action       = string
+    header_types  = list(string)
+    priority      = number
+    header_value  = string
+    action        = string
+    search_string = string
   })
   description = "HTTP header to filter . Currently supports a single header type and multiple header values."
   default = {
-    header_types = []
-    priority     = 1
-    header_value = ""
-    action       = "block"
+    header_types  = []
+    priority      = 1
+    header_value  = ""
+    action        = "block"
+    search_string = null
   }
 }
 
