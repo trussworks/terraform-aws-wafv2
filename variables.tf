@@ -112,7 +112,7 @@ variable "filtered_header_rule" {
     priority      = 1
     header_value  = ""
     action        = "block"
-    search_string = null
+    search_string = ""
   }
 }
 
