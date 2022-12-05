@@ -185,10 +185,11 @@ resource "aws_wafv2_web_acl" "main" {
 
   dynamic "rule" {
     for_each = [for header_name in var.filtered_header_rule.header_types : {
-      priority     = var.filtered_header_rule.priority + index(var.filtered_header_rule.header_types, header_name) + 1
-      name         = header_name
-      header_value = var.filtered_header_rule.header_value
-      action       = var.filtered_header_rule.action
+      priority      = var.filtered_header_rule.priority + index(var.filtered_header_rule.header_types, header_name) + 1
+      name          = header_name
+      header_value  = var.filtered_header_rule.header_value
+      action        = var.filtered_header_rule.action
+      search_string = var.filtered_header_rule.search_string
     }]
 
     content {
