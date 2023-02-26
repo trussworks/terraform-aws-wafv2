@@ -92,7 +92,7 @@ module "wafv2" {
 }
 ```
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -142,7 +142,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | web\_acl\_id | The ARN of the WAF WebACL. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
 
 ## Developer Setup
 
