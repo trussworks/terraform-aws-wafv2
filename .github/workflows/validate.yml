@@ -11,5 +11,3 @@ on:
 jobs:
   validate:
     uses: trussworks/shared-actions/.github/workflows/validate.yml@main
-    with:
-      go-version: 1.19
