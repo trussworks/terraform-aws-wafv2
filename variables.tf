@@ -65,10 +65,11 @@ variable "managed_rules" {
 
 variable "ip_sets_rule" {
   type = list(object({
-    name       = string
-    priority   = number
-    ip_set_arn = string
-    action     = string
+    name          = string
+    priority      = number
+    ip_set_arn    = string
+    action        = string
+    response_code = optional(number, 403)
   }))
   description = "A rule to detect web requests coming from particular IP addresses or address ranges."
   default     = []
@@ -76,10 +77,11 @@ variable "ip_sets_rule" {
 
 variable "ip_rate_based_rule" {
   type = object({
-    name     = string
-    priority = number
-    limit    = number
-    action   = string
+    name          = string
+    priority      = number
+    limit         = number
+    action        = string
+    response_code = optional(number, 403)
   })
   description = "A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span"
   default     = null
@@ -91,6 +93,7 @@ variable "ip_rate_url_based_rules" {
     priority              = number
     limit                 = number
     action                = string
+    response_code         = optional(number, 403)
     search_string         = string
     positional_constraint = string
   }))
