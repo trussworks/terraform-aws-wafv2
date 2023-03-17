@@ -15,6 +15,10 @@ variable "managed_rules" {
     override_action = string
     excluded_rules  = list(string)
     vendor_name     = string
+    rule_action_override = list(object({
+      name          = string
+      action_to_use = string
+    }))
   }))
   description = "List of Managed WAF rules."
   default = [
@@ -24,6 +28,7 @@ variable "managed_rules" {
       override_action = "none"
       excluded_rules  = []
       vendor_name     = "AWS"
+      rule_action_override = []
     },
     {
       name            = "AWSManagedRulesAmazonIpReputationList",
@@ -31,6 +36,7 @@ variable "managed_rules" {
       override_action = "none"
       excluded_rules  = []
       vendor_name     = "AWS"
+      rule_action_override = []
     },
     {
       name            = "AWSManagedRulesKnownBadInputsRuleSet",
@@ -38,6 +44,7 @@ variable "managed_rules" {
       override_action = "none"
       excluded_rules  = []
       vendor_name     = "AWS"
+      rule_action_override = []
     },
     {
       name            = "AWSManagedRulesSQLiRuleSet",
@@ -45,6 +52,7 @@ variable "managed_rules" {
       override_action = "none"
       excluded_rules  = []
       vendor_name     = "AWS"
+      rule_action_override = []
     },
     {
       name            = "AWSManagedRulesLinuxRuleSet",
@@ -52,6 +60,7 @@ variable "managed_rules" {
       override_action = "none"
       excluded_rules  = []
       vendor_name     = "AWS"
+      rule_action_override = []
     },
     {
       name            = "AWSManagedRulesUnixRuleSet",
@@ -59,6 +68,7 @@ variable "managed_rules" {
       override_action = "none"
       excluded_rules  = []
       vendor_name     = "AWS"
+      rule_action_override = []
     }
   ]
 }
