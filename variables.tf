@@ -15,50 +15,60 @@ variable "managed_rules" {
     override_action = string
     excluded_rules  = list(string)
     vendor_name     = string
+    rule_action_override = list(object({
+      name          = string
+      action_to_use = string
+    }))
   }))
   description = "List of Managed WAF rules."
   default = [
     {
-      name            = "AWSManagedRulesCommonRuleSet",
-      priority        = 10
-      override_action = "none"
-      excluded_rules  = []
-      vendor_name     = "AWS"
+      name                 = "AWSManagedRulesCommonRuleSet",
+      priority             = 10
+      override_action      = "none"
+      excluded_rules       = []
+      vendor_name          = "AWS"
+      rule_action_override = []
     },
     {
-      name            = "AWSManagedRulesAmazonIpReputationList",
-      priority        = 20
-      override_action = "none"
-      excluded_rules  = []
-      vendor_name     = "AWS"
+      name                 = "AWSManagedRulesAmazonIpReputationList",
+      priority             = 20
+      override_action      = "none"
+      excluded_rules       = []
+      vendor_name          = "AWS"
+      rule_action_override = []
     },
     {
-      name            = "AWSManagedRulesKnownBadInputsRuleSet",
-      priority        = 30
-      override_action = "none"
-      excluded_rules  = []
-      vendor_name     = "AWS"
+      name                 = "AWSManagedRulesKnownBadInputsRuleSet",
+      priority             = 30
+      override_action      = "none"
+      excluded_rules       = []
+      vendor_name          = "AWS"
+      rule_action_override = []
     },
     {
-      name            = "AWSManagedRulesSQLiRuleSet",
-      priority        = 40
-      override_action = "none"
-      excluded_rules  = []
-      vendor_name     = "AWS"
+      name                 = "AWSManagedRulesSQLiRuleSet",
+      priority             = 40
+      override_action      = "none"
+      excluded_rules       = []
+      vendor_name          = "AWS"
+      rule_action_override = []
     },
     {
-      name            = "AWSManagedRulesLinuxRuleSet",
-      priority        = 50
-      override_action = "none"
-      excluded_rules  = []
-      vendor_name     = "AWS"
+      name                 = "AWSManagedRulesLinuxRuleSet",
+      priority             = 50
+      override_action      = "none"
+      excluded_rules       = []
+      vendor_name          = "AWS"
+      rule_action_override = []
     },
     {
-      name            = "AWSManagedRulesUnixRuleSet",
-      priority        = 60
-      override_action = "none"
-      excluded_rules  = []
-      vendor_name     = "AWS"
+      name                 = "AWSManagedRulesUnixRuleSet",
+      priority             = 60
+      override_action      = "none"
+      excluded_rules       = []
+      vendor_name          = "AWS"
+      rule_action_override = []
     }
   ]
 }
