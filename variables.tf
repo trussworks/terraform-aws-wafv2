@@ -8,6 +8,26 @@ variable "scope" {
   description = "The scope of this Web ACL. Valid options: CLOUDFRONT, REGIONAL."
 }
 
+variable "custom_rules" {
+  type = list(object({
+    name              = string
+    priority          = number
+    action            = string
+    statement         = any
+    visibility_config = any
+  }))
+  description = "A list of custom rules to be added to the WebACL"
+  default     = []
+  validation {
+    condition = alltrue([
+      for rule in var.custom_rules : (
+        contains(["allow", "block", "count"], rule.action)
+      )
+    ])
+    error_message = "Each custom rule must have a valid action: 'allow', 'block', or 'count'."
+  }
+}
+
 variable "managed_rules" {
   type = list(object({
     name            = string

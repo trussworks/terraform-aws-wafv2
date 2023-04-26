@@ -23,7 +23,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.managed_rules
+    for_each = concat(var.managed_rules, var.custom_rules)
     content {
       name     = rule.value.name
       priority = rule.value.priority

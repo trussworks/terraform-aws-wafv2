@@ -124,6 +124,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | alb\_arn | ARN of the ALB to be associated with the WAFv2 ACL. | `string` | `""` | no |
 | associate\_alb | Whether to associate an ALB with the WAFv2 ACL. | `bool` | `false` | no |
+| custom\_rules | A list of custom rules to be added to the WebACL | ```list(object({ name = string priority = number action = string statement = any visibility_config = any }))``` | `[]` | no |
 | default\_action | The action to perform if none of the rules contained in the WebACL match. | `string` | `"allow"` | no |
 | enable\_logging | Whether to associate Logging resource with the WAFv2 ACL. | `bool` | `false` | no |
 | filtered\_header\_rule | HTTP header to filter . Currently supports a single header type and multiple header values. | ```object({ header_types = list(string) priority = number header_value = string action = string search_string = string })``` | ```{ "action": "block", "header_types": [], "header_value": "", "priority": 1, "search_string": "" }``` | no |
