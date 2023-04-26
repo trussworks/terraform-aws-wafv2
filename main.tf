@@ -23,7 +23,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = concat(var.managed_rules, var.custom_rules)
+    for_each = var.managed_rules
     content {
       name     = rule.value.name
       priority = rule.value.priority
@@ -313,6 +313,17 @@ resource "aws_wafv2_web_acl" "main" {
         metric_name                = rule.value.name
         sampled_requests_enabled   = true
       }
+    }
+  }
+
+  dynamic "rule" {
+    for_each = var.custom_rules
+    content {
+      name              = rule.value.name
+      action            = rule.value.action
+      priority          = rule.value.priority
+      statement         = rule.value.statement
+      visibility_config = rule.value.visibility_config
     }
   }
 
