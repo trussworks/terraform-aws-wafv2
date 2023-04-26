@@ -319,11 +319,41 @@ resource "aws_wafv2_web_acl" "main" {
   dynamic "rule" {
     for_each = var.custom_rules
     content {
-      name              = rule.value.name
-      action            = rule.value.action
-      priority          = rule.value.priority
-      statement         = rule.value.statement
-      visibility_config = rule.value.visibility_config
+      name     = rule.value.name
+      priority = rule.value.priority
+      action {
+        dynamic "allow" {
+          for_each = rule.value.action == "allow" ? [1] : []
+          content {}
+        }
+
+        dynamic "count" {
+          for_each = rule.value.action == "count" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
+      }
+      statement {
+        rule_group_reference_statement {
+          arn = rule.value.arn
+
+          dynamic "excluded_rule" {
+            for_each = rule.value.excluded_rules
+            content {
+              name = excluded_rule.value
+            }
+          }
+        }
+      }
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = rule.value.name
+        sampled_requests_enabled   = true
+      }
     }
   }
 
