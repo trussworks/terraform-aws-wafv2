@@ -27,7 +27,6 @@ resource "aws_wafv2_web_acl" "main" {
     content {
       name     = rule.value.name
       priority = rule.value.priority
-
       override_action {
         dynamic "none" {
           for_each = rule.value.override_action == "none" ? [1] : []
@@ -44,7 +43,7 @@ resource "aws_wafv2_web_acl" "main" {
         managed_rule_group_statement {
           name        = rule.value.name
           vendor_name = rule.value.vendor_name
-
+          version     = rule.value.version
           dynamic "excluded_rule" {
             for_each = rule.value.excluded_rules
             content {

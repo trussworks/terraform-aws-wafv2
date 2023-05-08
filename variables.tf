@@ -15,6 +15,7 @@ variable "managed_rules" {
     override_action = string
     excluded_rules  = list(string)
     vendor_name     = string
+    version         = optional(string)
     rule_action_override = list(object({
       name          = string
       action_to_use = string
