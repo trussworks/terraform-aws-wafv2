@@ -98,13 +98,13 @@ module "wafv2" {
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13.0 |
-| aws | >= 3.0 |
+| aws | >= 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.0 |
+| aws | >= 5.0 |
 
 ## Modules
 
