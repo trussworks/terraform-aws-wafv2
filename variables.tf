@@ -13,7 +13,6 @@ variable "managed_rules" {
     name            = string
     priority        = number
     override_action = string
-    excluded_rules  = list(string)
     vendor_name     = string
     version         = optional(string)
     rule_action_override = list(object({
@@ -27,7 +26,6 @@ variable "managed_rules" {
       name                 = "AWSManagedRulesCommonRuleSet",
       priority             = 10
       override_action      = "none"
-      excluded_rules       = []
       vendor_name          = "AWS"
       rule_action_override = []
     },
@@ -35,7 +33,6 @@ variable "managed_rules" {
       name                 = "AWSManagedRulesAmazonIpReputationList",
       priority             = 20
       override_action      = "none"
-      excluded_rules       = []
       vendor_name          = "AWS"
       rule_action_override = []
     },
@@ -43,7 +40,6 @@ variable "managed_rules" {
       name                 = "AWSManagedRulesKnownBadInputsRuleSet",
       priority             = 30
       override_action      = "none"
-      excluded_rules       = []
       vendor_name          = "AWS"
       rule_action_override = []
     },
@@ -51,7 +47,6 @@ variable "managed_rules" {
       name                 = "AWSManagedRulesSQLiRuleSet",
       priority             = 40
       override_action      = "none"
-      excluded_rules       = []
       vendor_name          = "AWS"
       rule_action_override = []
     },
@@ -59,7 +54,6 @@ variable "managed_rules" {
       name                 = "AWSManagedRulesLinuxRuleSet",
       priority             = 50
       override_action      = "none"
-      excluded_rules       = []
       vendor_name          = "AWS"
       rule_action_override = []
     },
@@ -67,7 +61,6 @@ variable "managed_rules" {
       name                 = "AWSManagedRulesUnixRuleSet",
       priority             = 60
       override_action      = "none"
-      excluded_rules       = []
       vendor_name          = "AWS"
       rule_action_override = []
     }
@@ -166,7 +159,6 @@ variable "group_rules" {
     arn             = string
     priority        = number
     override_action = string
-    excluded_rules  = list(string)
   }))
   description = "List of WAFv2 Rule Groups."
   default     = []

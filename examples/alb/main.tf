@@ -28,9 +28,9 @@ module "wafv2" {
   associate_alb = true
   alb_arn       = aws_lb.alb.arn
   managed_rules = [
-    { "excluded_rules" : [], "name" : "AWSManagedRulesAmazonIpReputationList", "override_action" : "none", "priority" : 1, "vendor_name" : "AWS", "rule_action_override" : [] },
-    { "excluded_rules" : [], "name" : "AWSManagedRulesCommonRuleSet", "override_action" : "none", "priority" : 2, "vendor_name" : "AWS", "rule_action_override" : [{ "name" = "SizeRestrictions_BODY", "action_to_use" = "allow" }] },
-    { "excluded_rules" : [], "name" : "AWSManagedRulesSQLiRuleSet", "override_action" : "none", "priority" : 3, "vendor_name" : "AWS", "rule_action_override" : [] }
+    { "name" : "AWSManagedRulesAmazonIpReputationList", "override_action" : "none", "priority" : 1, "vendor_name" : "AWS", "rule_action_override" : [] },
+    { "name" : "AWSManagedRulesCommonRuleSet", "override_action" : "none", "priority" : 2, "vendor_name" : "AWS", "rule_action_override" : [{ "name" = "SizeRestrictions_BODY", "action_to_use" = "allow" }] },
+    { "name" : "AWSManagedRulesSQLiRuleSet", "override_action" : "none", "priority" : 3, "vendor_name" : "AWS", "rule_action_override" : [] }
   ]
   filtered_header_rule = {
     header_types = [
@@ -85,7 +85,6 @@ module "wafv2" {
 
   group_rules = [
     {
-      excluded_rules : [],
       name : aws_wafv2_rule_group.block_countries.name,
       arn : aws_wafv2_rule_group.block_countries.arn,
       override_action : "none",
