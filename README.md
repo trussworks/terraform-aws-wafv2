@@ -91,7 +91,7 @@ module "wafv2" {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13.0 |
+| terraform | >= 1.0 |
 | aws | >= 5.0 |
 
 ## Providers
