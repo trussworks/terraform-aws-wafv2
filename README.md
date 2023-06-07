@@ -8,12 +8,6 @@ Creates AWS WAFv2 ACL and supports the following
 - Global IP Rate limiting
 - Custom IP rate limiting for different URLs
 
-## Terraform Versions
-
-Terraform 0.13 and newer. Pin module version to ~> 2.0. Submit pull-requests to master branch.
-
-Terraform 0.12. Pin module version to ~> 1.0. Submit pull-requests to terraform012 branch.
-
 ## Usage with CloudFront
 
 **Note: The Terraform AWS provider needs to be associated with the us-east-1 region to use with CloudFront.**
