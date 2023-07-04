@@ -96,9 +96,18 @@ resource "aws_wafv2_web_acl" "main" {
           for_each = rule.value.action == "block" ? [1] : []
           content {
             dynamic "custom_response" {
-              for_each = rule.value.response_code != 403 ? [1] : []
+              for_each = rule.value.enable_block_custom_response == true ? [1] : []
               content {
-                response_code = rule.value.response_code
+                custom_response_body_key = rule.value.block_custom_response_content_key
+                response_code            = rule.value.response_code
+
+                dynamic "response_header" {
+                  for_each = rule.value.enable_block_custom_headers == true ? [1] : []
+                  content {
+                    name  = rule.value.response_header_name
+                    value = rule.value.response_header_value
+                  }
+                }
               }
             }
           }
@@ -135,9 +144,18 @@ resource "aws_wafv2_web_acl" "main" {
           for_each = rule.value.action == "block" ? [1] : []
           content {
             dynamic "custom_response" {
-              for_each = rule.value.response_code != 403 ? [1] : []
+              for_each = rule.value.enable_block_custom_response == true ? [1] : []
               content {
-                response_code = rule.value.response_code
+                custom_response_body_key = rule.value.block_custom_response_content_key
+                response_code            = rule.value.response_code
+
+                dynamic "response_header" {
+                  for_each = rule.value.enable_block_custom_headers == true ? [1] : []
+                  content {
+                    name  = rule.value.response_header_name
+                    value = rule.value.response_header_value
+                  }
+                }
               }
             }
           }
@@ -180,9 +198,18 @@ resource "aws_wafv2_web_acl" "main" {
           for_each = rule.value.action == "block" ? [1] : []
           content {
             dynamic "custom_response" {
-              for_each = rule.value.response_code != 403 ? [1] : []
+              for_each = rule.value.enable_block_custom_response == true ? [1] : []
               content {
-                response_code = rule.value.response_code
+                custom_response_body_key = rule.value.block_custom_response_content_key
+                response_code            = rule.value.response_code
+
+                dynamic "response_header" {
+                  for_each = rule.value.enable_block_custom_headers == true ? [1] : []
+                  content {
+                    name  = rule.value.response_header_name
+                    value = rule.value.response_header_value
+                  }
+                }
               }
             }
           }

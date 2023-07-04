@@ -169,3 +169,17 @@ variable "default_action" {
   description = "The action to perform if none of the rules contained in the WebACL match."
   default     = "allow"
 }
+
+variable "enable_custom_block_response" {
+  type        = bool
+  description = "This enables custom responses for the block requests"
+  default     = false
+}
+
+variable "custom_block_response_content" {
+  type        = map(string)
+  description = "This enables custom responses for the block requests"
+  default = {
+    "custom-block-response-key" = "This is the response the client will see when they are blocked by WAF"
+  }
+}
