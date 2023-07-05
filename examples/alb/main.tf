@@ -27,6 +27,13 @@ module "wafv2" {
   scope         = "REGIONAL"
   associate_alb = true
   alb_arn       = aws_lb.alb.arn
+
+  #enable custom response code
+  custom_block_response_content = {
+    "test-key" = "Your request has been blocked. Please contact the system administrators"
+  }
+  enable_custom_block_response = true
+
   managed_rules = [
     { "name" : "AWSManagedRulesAmazonIpReputationList", "override_action" : "none", "priority" : 1, "vendor_name" : "AWS", "rule_action_override" : [] },
     { "name" : "AWSManagedRulesCommonRuleSet", "override_action" : "none", "priority" : 2, "vendor_name" : "AWS", "rule_action_override" : [{ "name" = "SizeRestrictions_BODY", "action_to_use" = "allow" }] },
@@ -50,10 +57,14 @@ module "wafv2" {
       ip_set_arn = aws_wafv2_ip_set.ipset.arn
     },
     {
-      name       = "block-all-ips"
-      priority   = 6
-      action     = var.enable_block_all_ips ? "block" : "count"
-      ip_set_arn = aws_wafv2_ip_set.block_all_ips.arn
+      name                              = "block-all-ips"
+      priority                          = 6
+      action                            = var.enable_block_all_ips ? "block" : "count"
+      ip_set_arn                        = aws_wafv2_ip_set.block_all_ips.arn
+      enable_block_custom_response      = true
+      response_code                     = 403
+      block_custom_response_content_key = "test-key"
+      enable_block_custom_headers       = false
     }
   ]
 
