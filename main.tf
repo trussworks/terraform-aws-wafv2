@@ -128,6 +128,15 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
+  dynamic "custom_response_body" {
+    for_each = var.enable_custom_block_response == true ? [1] : []
+    content {
+      content      = values(var.custom_block_response_content)[0]
+      content_type = "TEXT_PLAIN"
+      key          = keys(var.custom_block_response_content)[0]
+    }
+  }
+
   dynamic "rule" {
     for_each = var.ip_rate_based_rule != null ? [var.ip_rate_based_rule] : []
     content {
