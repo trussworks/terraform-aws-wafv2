@@ -15,6 +15,41 @@ variable "managed_rules" {
     override_action = string
     vendor_name     = string
     version         = optional(string)
+    rule_set = optional(list(object({
+      name                    = string
+      enable_machine_learning = optional(bool)
+      inspection_level        = optional(string)
+      creation_path           = optional(string)
+      enable_regex_in_path    = optional(bool)
+      registration_page_path  = optional(string)
+      response_inspection = optional(list(object({
+        body_contains = optional(list(object({
+          success_strings = string
+        })))
+        header      = optional()
+        json        = optional()
+        status_code = optional()
+      })))
+      request_inspection = optional(list(object({
+        address_fields = optional(list(object({
+          identifier = string
+        })))
+        email_fields = optional(list(object({
+          identifier = string
+        })))
+        password_field = optional(list(object({
+          identifier = string
+        })))
+        payload_type = string
+        phone_number_fields = optional(list(object({
+          identifier = string
+        })))
+        username_field = optional(list(object({
+          identifier = string
+        })))
+      })))
+
+    })))
     rule_action_override = list(object({
       name          = string
       action_to_use = string
